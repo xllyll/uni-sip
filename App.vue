@@ -1,3 +1,10 @@
+<template>
+  <view class="app-root">
+    <!-- 其他内容 -->
+	123
+  </view>
+</template>
+
 <script>
 	export default {
 		onLaunch: function() {
@@ -14,4 +21,7 @@
 
 <style>
 	/*每个页面公共css */
+	.app-root{
+		background-color: aqua;
+	}
 </style>

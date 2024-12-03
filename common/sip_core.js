@@ -8,14 +8,17 @@ let userAgent;
 let peer;
 var callType = 'audio'
 
+let sipIP = "192.168.1.218"
+let sipPort = 5066
+
 var SipCore = {
 	login(user, pass) {
 		username = user;
 		password = pass;
-		const socket = new JsSIP.WebSocketInterface(`ws://192.168.1.218:5066`);
+		const socket = new JsSIP.WebSocketInterface(`ws://${sipIP}:${sipPort}`);
 		const configuration = {
 			sockets: [socket],
-			uri: `sip:${user}@192.168.1.218:5066;transport=ws`, // loginPhone为11位以1开头的数字
+			uri: `sip:${user}@${sipIP}:${sipPort};transport=ws`, // loginPhone为11位以1开头的数字
 			password: pass, // 密码
 			register: true, // 自动注册
 			session_timers: false,
@@ -27,34 +30,27 @@ var SipCore = {
 	},
 	registerListen(ua) {
 		ua.on("connected", () => {
-			// msg_log.log("连线中")
 			console.log("连线中");
 		});
 		ua.on("connecting", () => {
-			// msg_log.log("接线中")
 			console.log("接线中")
 		});
 		ua.on("disconnected", () => {
-			// msg_log.error("取消连线")
 			console.error("取消连线")
 		});
 		ua.on("registered", () => {
 			console.log(`--${username}注册成功--`);
 		});
 		ua.on("registrationExpiring", () => {
-			// msg_log.log("注册即将到期,重新注册")
 			console.log("注册即将到期,重新注册")
 		});
 		ua.on("registrationFailed", () => {
-			// msg_log.error("注册失败")
 			console.error("注册失败")
 		});
 		ua.on("unregistered", () => {
-			// msg_log.log("取消注册")
 			console.log("取消注册")
 		});
 		ua.on("sipEvent", (e) => {
-			// msg_log.log("sipEvent")
 			console.log("sipEvent:", e)
 		});
 		ua.on("newRTCSession", function(data) {
@@ -76,10 +72,10 @@ var SipCore = {
 			// 连接已接受
 			session.on("accepted", () => {
 				_this.videoSpinner = true;
-				// msg_log.log("通话接受时候触发")
+				console.log("通话接受时候触发")
 			});
 			session.on("sdp", () => {
-				// msg_log.log("交换sdp信令事件触发")
+				console.log("交换sdp信令事件触发")
 			});
 			session.on("failed", () => {
 				// window.open("https://192.168.30.236:16376","验证")
@@ -158,6 +154,36 @@ var SipCore = {
 				console.log("通话结束")
 			});
 		});
+	},
+	call(callPhone,isVideo=false) {
+		const eventHandlers = {
+			progress: function(e) {
+				console.log("call is in progress");
+			},
+			failed: function(e) {
+				// _this.titleText = "对方已挂断！";
+				// _this.$message.error("无人应答！")
+				// _this.VoiceVisible = false;
+				// _this.ViewsVisible = false;
+				console.log("call failed: ", e);
+			},
+			ended: function(e) {
+				// _this.$message.error("通话结束")
+				console.log("call ended : ", e);
+			},
+			confirmed: function(e) {
+				console.log("call confirmed");
+			},
+		}
+		const opt = {
+			mediaConstraints: {
+				audio: true,
+				video: isVideo
+			},
+			eventHandlers,
+		};
+		// callPhone 要拨打的电话号码
+		userAgent.call(`sip:${callPhone}@${sipIP}:${sipPort}`, opt);
 	}
 }
 
