@@ -1,0 +1,15 @@
+{
+  "hash": "dfbb30fe",
+  "configHash": "723f2b64",
+  "lockfileHash": "2a82a79e",
+  "browserHash": "bfa417df",
+  "optimized": {
+    "jssip": {
+      "src": "../../../../../node_modules/jssip/lib-es5/JsSIP.js",
+      "file": "jssip.js",
+      "fileHash": "c8dcb003",
+      "needsInterop": true
+    }
+  },
+  "chunks": {}
+}
