@@ -71,7 +71,6 @@ var SipCore = {
 			});
 			// 连接已接受
 			session.on("accepted", () => {
-				_this.videoSpinner = true;
 				console.log("通话接受时候触发")
 			});
 			session.on("sdp", () => {
