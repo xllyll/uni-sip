@@ -1,4 +1,5 @@
 <script>
+	import SipCore from './common/sip_core'
 	export default {
 		onLaunch: function() {
 			console.log('App Launch')
