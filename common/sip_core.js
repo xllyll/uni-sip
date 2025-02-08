@@ -65,7 +65,12 @@ var SipCore = {
 			console.log("sipEvent:", e)
 		});
 		ua.on('newRTCSession', this.handleNewRTCSession.bind(this));
-
+		ua.on("newMessage", this.handleNewMessageSession.bind(this));
+	},
+	handleNewMessageSession(data) {
+		console.log('newMessage:',data);
+		const message = data.request.body;
+		console.log(message);
 	},
 	handleNewRTCSession(data) {
 		console.log(data);
