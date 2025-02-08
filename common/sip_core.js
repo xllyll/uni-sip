@@ -51,7 +51,6 @@ var SipCore = {
 		});
 		ua.on("registered", () => {
 			console.log(`--${username}注册成功--`);
-			alert("登陆成功")
 		});
 		ua.on("registrationExpiring", () => {
 			console.log("注册即将到期,重新注册")

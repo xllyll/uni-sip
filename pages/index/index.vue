@@ -9,9 +9,11 @@
 
 <script setup lang="ts">
 	import { onLoad, onShow } from '@dcloudio/uni-app';
-	onLoad(e=>{
+	import { ref } from 'vue';
+	const title = ref("")
+	onLoad(e => {
 		uni.reLaunch({
-			url:'/pages/user/login'
+			url: '/pages/call/index'
 		})
 	})
 </script>
