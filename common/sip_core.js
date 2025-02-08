@@ -172,34 +172,49 @@ var SipCore = {
 		}
 	},
 	call(callPhone, isVideo = false) {
+		console.log('call phone');
 		const eventHandlers = {
 			progress: function(e) {
 				console.log("call is in progress");
 			},
 			failed: function(e) {
-				// _this.titleText = "对方已挂断！";
-				// _this.$message.error("无人应答！")
-				// _this.VoiceVisible = false;
-				// _this.ViewsVisible = false;
-				console.log("call failed: ", e);
+				console.log("call failed with cause: ", e);
 			},
 			ended: function(e) {
-				// _this.$message.error("通话结束")
-				console.log("call ended : ", e);
+				console.log("call ended with cause: ", e);
 			},
 			confirmed: function(e) {
-				console.log("call confirmed");
+				console.log("call confirmed", e);
 			},
+			peerconnection: function(e) {
+				console.log("peerconnection", e);
+				e.peerconnection.onaddstream = function(event) {
+					console.log(" *** addstream", event);
+					const audioElement = document.getElementById("audioElement");
+					document.body.appendChild(audioElement);
+					audioElement.srcObject = event.stream;
+					audioElement.play();
+				};
+			}
 		}
-		const opt = {
+		var options = {
+			eventHandlers: eventHandlers,
 			mediaConstraints: {
 				audio: true,
 				video: isVideo
 			},
-			eventHandlers,
+			sessionTimersExpires: 3600,
+			pcConfig: {
+				iceServers: [{
+					urls: [
+						"stun:stun.l.google.com:19302",
+						"stun:stun1.l.google.com:19302",
+					],
+				}, ],
+			},
 		};
 		// callPhone 要拨打的电话号码
-		this.userAgent.call(`sip:${callPhone}@${sipIP}:${sipPort}`, opt);
+		this.userAgent.call(`sip:${callPhone}@${this.config.sipIP}:${this.config.sipPort}`, options);
 	}
 }
 

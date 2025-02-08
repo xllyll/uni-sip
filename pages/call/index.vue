@@ -24,7 +24,7 @@
 			<view class="phone-item" @click="onPhoneNumCheck('0')">0</view>
 			<view class="phone-item" @click="onPhoneNumCheck('#')">#</view>
 		</view>
-		<button>CALL</button>
+		<button @click="call">CALL</button>
 	</view>
 </template>
 
