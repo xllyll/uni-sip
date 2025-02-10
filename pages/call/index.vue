@@ -8,56 +8,57 @@
 		<button @click="login">LOGIN</button>
 		<view class="phone-num">
 			<view>{{callPhoneNum}}</view>
-			<view @click="onPhoneNumDelete"><<</view>
+			<view @click="onPhoneNumDelete">
+				<< 
+			</view>
+			</view>
+			<view class="phone-box">
+				<view class="phone-item" @click="onPhoneNumCheck('1')">1</view>
+				<view class="phone-item" @click="onPhoneNumCheck('2')">2</view>
+				<view class="phone-item" @click="onPhoneNumCheck('3')">3</view>
+				<view class="phone-item" @click="onPhoneNumCheck('4')">4</view>
+				<view class="phone-item" @click="onPhoneNumCheck('5')">5</view>
+				<view class="phone-item" @click="onPhoneNumCheck('6')">6</view>
+				<view class="phone-item" @click="onPhoneNumCheck('7')">7</view>
+				<view class="phone-item" @click="onPhoneNumCheck('8')">8</view>
+				<view class="phone-item" @click="onPhoneNumCheck('9')">9</view>
+				<view class="phone-item" @click="onPhoneNumCheck('*')">*</view>
+				<view class="phone-item" @click="onPhoneNumCheck('0')">0</view>
+				<view class="phone-item" @click="onPhoneNumCheck('#')">#</view>
+			</view>
+			<button @click="call">CALL</button>
 		</view>
-		<view class="phone-box">
-			<view class="phone-item" @click="onPhoneNumCheck('1')">1</view>
-			<view class="phone-item" @click="onPhoneNumCheck('2')">2</view>
-			<view class="phone-item" @click="onPhoneNumCheck('3')">3</view>
-			<view class="phone-item" @click="onPhoneNumCheck('4')">4</view>
-			<view class="phone-item" @click="onPhoneNumCheck('5')">5</view>
-			<view class="phone-item" @click="onPhoneNumCheck('6')">6</view>
-			<view class="phone-item" @click="onPhoneNumCheck('7')">7</view>
-			<view class="phone-item" @click="onPhoneNumCheck('8')">8</view>
-			<view class="phone-item" @click="onPhoneNumCheck('9')">9</view>
-			<view class="phone-item" @click="onPhoneNumCheck('*')">*</view>
-			<view class="phone-item" @click="onPhoneNumCheck('0')">0</view>
-			<view class="phone-item" @click="onPhoneNumCheck('#')">#</view>
-		</view>
-		<button @click="call">CALL</button>
-	</view>
 </template>
 
 <script lang="ts" setup>
 	import { SIP } from "jssip/lib/Constants";
-import SipCore from "../../common/sip_core";
+	import SipCore from "../../common/sip_core";
 	import {
 		ref
 	} from "vue";
-	const username = ref('1001')
+	const username = ref('8001')
 	const password = ref('1234')
 	const callPhoneNum = ref('')
-	const login = ()=>{
+	const login = () => {
 		SipCore.login(username.value, password.value)
 	}
-	const onPhoneNumCheck = (v)=>{
+	const onPhoneNumCheck = (v) => {
 		var phoneNum = callPhoneNum.value;
 		phoneNum = phoneNum + v
 		callPhoneNum.value = phoneNum
 	}
-	const onPhoneNumDelete = ()=>{
+	const onPhoneNumDelete = () => {
 		var phoneNum = callPhoneNum.value;
-		if(phoneNum.length>0){
+		if (phoneNum.length > 0) {
 			//删除最后一个字符
-			phoneNum = phoneNum.substring(0,phoneNum.length-1)
+			phoneNum = phoneNum.substring(0, phoneNum.length - 1)
 		}
 		callPhoneNum.value = phoneNum
 	}
-	
-	const call = ()=>{
+
+	const call = () => {
 		SipCore.call(callPhoneNum.value)
 	}
-	
 </script>
 
 <style lang="less">
@@ -66,12 +67,14 @@ import SipCore from "../../common/sip_core";
 		height: 100%;
 		background: #f8f8f8;
 	}
-	.phone-box{
+
+	.phone-box {
 		display: grid;
 		grid-template-columns: repeat(3, 1fr);
 		grid-template-rows: repeat(4, 1fr);
 	}
-	.phone-item{
+
+	.phone-item {
 		height: 80rpx;
 		display: flex;
 		align-items: center;
@@ -79,7 +82,8 @@ import SipCore from "../../common/sip_core";
 		background-color: #fff;
 		margin: 10rpx;
 	}
-	.phone-num{
+
+	.phone-num {
 		height: 50rpx;
 		display: flex;
 		flex-direction: row;
