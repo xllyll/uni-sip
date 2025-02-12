@@ -8,8 +8,8 @@
 		<button @click="login">LOGIN</button>
 		<view class="phone-num">
 			<view>{{callPhoneNum}}</view>
-			<view @click="onPhoneNumDelete">
-				<< 
+			<view class="del-back" @click="onPhoneNumDelete">
+				<image src="/static/backspace.png" mode="heightFix"></image> 
 			</view>
 			</view>
 			<view class="phone-box">
@@ -90,5 +90,11 @@
 		align-items: center;
 		justify-content: space-between;
 		padding: 20rpx;
+		.del-back{
+			height: 50rpx;
+			image{
+				height: 100%;
+			}
+		}
 	}
 </style>
