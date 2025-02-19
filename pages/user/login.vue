@@ -25,10 +25,13 @@
 	})
 
 	const onLogin = () => {
-		// uni.navigateTo({
-		// 	url:'/pages/call/index'
-		// })
-		SipCore.login(username.value, password.value)
+		SipCore.login(username.value, password.value).then(res=>{
+			uni.navigateTo({
+				url:'/pages/call/index'
+			})
+		}).catch(err=>{
+			
+		})
 	}
 </script>
 
