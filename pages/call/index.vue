@@ -1,7 +1,10 @@
 <template>
 	<view class="call-root">
 		<view class="header">
-
+			<view></view>
+			<view>
+				<view @click="getUserStatus">STATUS</view>
+			</view>
 		</view>
 		<input type="text" v-model="username" placeholder="username" />
 		<input type="text" v-model="password" placeholder="password" />
@@ -59,6 +62,12 @@
 	const call = () => {
 		SipCore.call(callPhoneNum.value)
 	}
+	
+	const getUserStatus = ()=>{
+		var status = SipCore.getStatus()
+		console.log(status);
+	}
+	
 </script>
 
 <style lang="less">

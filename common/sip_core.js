@@ -7,7 +7,7 @@ var loginCallbackSuccess = null;
 var loginCallbackError = null;
 
 var SipCore = {
-	version:'1.0.1',
+	version: '1.0.1',
 	config: {
 		sipIP: "192.168.1.218",
 		sipPort: 5066,
@@ -24,8 +24,8 @@ var SipCore = {
 			'background:#007aff ; padding: 1px; border-radius: 0 3px 3px 0;  color: #fff; font-weight: bold;'
 		)
 		this.config = {
-			sipIP:    config.sipIP    || "192.168.1.218",
-			sipPort:  config.sipPort  || 5066,
+			sipIP: config.sipIP || "192.168.1.218",
+			sipPort: config.sipPort || 5066,
 			username: config.username,
 			password: config.password,
 			callType: config.callType || 'audio'
@@ -58,6 +58,15 @@ var SipCore = {
 			ua.start()
 		})
 	},
+	getSession() {
+		return this.currentSession;
+	},
+	getStatus(){
+		if(this.currentSession){
+			return this.currentSession.status;
+		}
+		return null
+	},
 	registerListen(ua) {
 		ua.on("connected", () => {
 			console.log("连线中");
@@ -68,8 +77,8 @@ var SipCore = {
 		ua.on("disconnected", () => {
 			console.error("disconnected 取消连线")
 		});
-		ua.on("registered", () => {
-			console.log(`registered --${username}注册成功--`);
+		ua.on("registered", (e) => {
+			console.log(`registered --${username}注册成功--`,e);
 			loginCallbackSuccess();
 		});
 		ua.on("registrationExpiring", () => {
@@ -89,7 +98,7 @@ var SipCore = {
 		ua.on("newMessage", this.handleNewMessageSession.bind(this));
 	},
 	handleNewMessageSession(data) {
-		console.log('newMessage:',data);
+		console.log('newMessage:', data);
 		const message = data.request.body;
 		console.log(message);
 	},

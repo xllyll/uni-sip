@@ -13,7 +13,7 @@
 	const title = ref("")
 	onLoad(e => {
 		uni.reLaunch({
-			url: '/pages/call/index'
+			url: '/pages/user/login'
 		})
 	})
 </script>
