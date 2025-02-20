@@ -58,14 +58,17 @@ var SipCore = {
 			ua.start()
 		})
 	},
-	getSession() {
+	isConnected(){
+		return this.userAgent.isConnected();
+	},
+	isRegistered(){
+		return this.userAgent.isRegistered();
+	},
+	getCurrentSession() {
 		return this.currentSession;
 	},
 	getStatus(){
-		if(this.currentSession){
-			return this.currentSession.status;
-		}
-		return null
+		return this.userAgent.status();
 	},
 	registerListen(ua) {
 		ua.on("connected", () => {
@@ -79,14 +82,18 @@ var SipCore = {
 		});
 		ua.on("registered", (e) => {
 			console.log(`registered --${username}注册成功--`,e);
-			loginCallbackSuccess();
+			if(loginCallbackSuccess!=null){
+				loginCallbackSuccess();
+			}
 		});
 		ua.on("registrationExpiring", () => {
 			console.log("registrationExpiring 注册即将到期,重新注册")
 		});
 		ua.on("registrationFailed", (err) => {
-			console.error("registrationFailed 注册失败")
-			loginCallbackError(err);
+			console.log("registrationFailed 注册失败",err)
+			if(loginCallbackError!=null){
+				loginCallbackError(err);
+			}
 		});
 		ua.on("unregistered", () => {
 			console.log("unregistered 取消注册")
