@@ -1,10 +1,10 @@
 <template>
 	<view class="login-root">
 		<view class="input-bg">
-			<input type="text" v-model="username" placeholder="username"/>
+			<input type="text" v-model="username" placeholder="username" />
 		</view>
 		<view class="input-bg">
-			<input type="text" v-model="password" placeholder="password"/>
+			<input type="text" v-model="password" placeholder="password" />
 		</view>
 		<button class="login-bt" @click="onLogin">登陆</button>
 	</view>
@@ -20,17 +20,16 @@
 	const password = ref('1234')
 
 	onLoad(e => {
-	   // onload
-		
+		// onload
 	})
 
 	const onLogin = () => {
-		SipCore.login(username.value, password.value).then(res=>{
+		SipCore.login(username.value, password.value).then(res => {
 			uni.navigateTo({
-				url:'/pages/call/index'
+				url: '/pages/call/index'
 			})
-		}).catch(err=>{
-			
+		}).catch(err => {
+
 		})
 	}
 </script>
@@ -47,11 +46,13 @@
 		flex-direction: row;
 		align-items: center;
 		justify-content: space-between;
-		input{
+
+		input {
 			margin: 10rpx;
 		}
 	}
-	.login-bt{
+
+	.login-bt {
 		margin-top: 80rpx;
 		width: calc(100% - 80rpx);
 		background-color: #2f98fc;
