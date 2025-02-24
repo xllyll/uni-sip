@@ -2,8 +2,9 @@ import JsSIP from "jssip";
 
 var username = ""
 var password = ""
-
+/** 登录成功回调 */
 var loginCallbackSuccess = null;
+/** 登录失败回调 */
 var loginCallbackError = null;
 
 var SipCore = {
